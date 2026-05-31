@@ -1,6 +1,6 @@
 Please refer to `README.md`.
 
 
-### Memory
+### Context Management
 
-Refer to `recap` folder, particularly the `memory.md` for past research and insights.
+Load past context from `recaps` folder, particularly the `memory.md` for the latest snapshot summary.
