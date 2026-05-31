@@ -1,0 +1,32 @@
+QQQ Daily Cluster Labels — Summary
+============================================================
+
+Data: 2019-12-31 → 2026-05-01
+Total days: 1592
+
+Cluster sizes:
+cluster
+0    176
+1    497
+2    678
+3     17
+4    224
+Name: count, dtype: int64
+
+Cluster profile:
+         daily_return  intraday_range  close_position  volume_ratio    vol_5d   mom_20d          name
+cluster                                                                                              
+0           -0.020650        0.031550        0.258557      1.495588  0.019423 -0.051039    Sharp Down
+1           -0.005899        0.014639        0.267394      1.003665  0.011389  0.018890   Normal Bear
+2            0.005893        0.011265        0.779704      0.898002  0.009199  0.043988   Normal Bull
+3           -0.010471        0.065303        0.426328      1.281164  0.060850 -0.169047  Crash/Crisis
+4            0.018314        0.023707        0.804783      0.985999  0.021315 -0.007351   Volatile Up
+
+2025-2026 distribution:
+cluster
+0     27
+1    108
+2    160
+3      3
+4     35
+Name: count, dtype: int64
