@@ -92,6 +92,9 @@ class MinuteAndDailyMLDataProcessor(MLDataProcessor):
         minute_df = self._flatten(minute_bars_df, self._symbol)
         daily_df  = self._flatten(daily_bars_df,  self._symbol)
 
+        print(f"Minute bars df shape: {minute_df.shape}")
+        print(f"Daily bars df shape: {daily_df.shape}")
+
         # Labels (minute-level)
         if self._minute_label_transformer is not None:
             minute_label_df = self._minute_label_transformer.transform(minute_df.copy())
@@ -100,9 +103,11 @@ class MinuteAndDailyMLDataProcessor(MLDataProcessor):
 
         # Features (minute-level)
         minute_feature_df = self._minute_feature_transformer.transform(minute_df.copy())
+        print(f"Minute feature df shape after minute feature transformer: {minute_feature_df.shape}")
 
         # Features (daily-level)
         daily_feature_df = self._daily_feature_transformer.transform(daily_df.copy())
+        print(f"Daily feature df shape after daily feature transformer: {daily_feature_df.shape}")
 
         # Pre-rename feature columns with their intended suffixes BEFORE merging.
         # Pandas merge only adds suffixes to columns that collide between both sides.
@@ -133,11 +138,15 @@ class MinuteAndDailyMLDataProcessor(MLDataProcessor):
         # Restore 'datetime' as a plain column for downstream merges and filtering.
         merged_feature_df = merged_feature_df.rename(columns={'datetime_minute': 'datetime'})
 
+        print(f"Merged feature df shape after merging minute and daily features: {merged_feature_df.shape}")
+
         # Combine labels and features
         if minute_label_df is not None:
             merged_df = pd.merge(minute_label_df, merged_feature_df, on='datetime', how='left')
         else:
             merged_df = merged_feature_df
+
+        print(f"Merged df shape after merging features and labels: {merged_df.shape}")
 
         # Filter to the requested date range
         merged_df['datestr'] = merged_df['datetime'].dt.strftime('%Y-%m-%d')
@@ -146,8 +155,13 @@ class MinuteAndDailyMLDataProcessor(MLDataProcessor):
             (merged_df['datestr'] <= end_datestr)
         ]
 
+        print(f"Filtered df shape after filtering to requested date range: {filtered_df.shape}")
+
         if drop_label_na and self._minute_label_transformer is not None:
             filtered_df = filtered_df.dropna(subset=[self.label_column])
+
+        print(f"Filtered df shape after dropping rows with NA labels: {filtered_df.shape}")
+
         return filtered_df
 
 
