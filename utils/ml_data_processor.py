@@ -150,6 +150,8 @@ class MinuteAndDailyMLDataProcessor(MLDataProcessor):
 
         # Filter to the requested date range
         merged_df['datestr'] = merged_df['datetime'].dt.strftime('%Y-%m-%d')
+        print(f'min datestr in merged_df: {merged_df["datestr"].min()}, max datestr in merged_df: {merged_df["datestr"].max()}')
+        print(f'start_datestr: {start_datestr}, end_datestr: {end_datestr}')
         filtered_df = merged_df[
             (merged_df['datestr'] >= start_datestr) &
             (merged_df['datestr'] <= end_datestr)
